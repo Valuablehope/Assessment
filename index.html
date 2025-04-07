@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workload Assessment Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2rem;
+    }
+    form {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    .task-entry {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .task-entry input {
+      flex: 1;
+    }
+    .remove-btn {
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.8rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .add-btn {
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    button[type="submit"] {
+      background: #007bff;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<form id="assessmentForm">
+  <h1>Workload Assessment Form</h1>
+
+  <!-- Short Text -->
+  <label for="name">Full Name:</label><br>
+  <input type="text" name="name" required><br><br>
+
+  <!-- Long Text -->
+  <label for="role">Describe your main responsibilities:</label><br>
+  <textarea name="role" rows="4" required></textarea><br><br>
+
+  <!-- MCQ -->
+  <label>How would you rate your current workload?</label><br>
+  <label><input type="radio" name="workload_rating" value="Light" required> Light</label><br>
+  <label><input type="radio" name="workload_rating" value="Moderate"> Moderate</label><br>
+  <label><input type="radio" name="workload_rating" value="Heavy"> Heavy</label><br><br>
+
+  <!-- Multi-select -->
+  <label>Which of the following activities do you handle? (Select all that apply):</label><br>
+  <label><input type="checkbox" name="activities" value="Meetings"> Meetings</label><br>
+  <label><input type="checkbox" name="activities" value="Reporting"> Reporting</label><br>
+  <label><input type="checkbox" name="activities" value="Field Visits"> Field Visits</label><br>
+  <label><input type="checkbox" name="activities" value="Admin Tasks"> Admin Tasks</label><br>
+  <label><input type="checkbox" name="activities" value="Data Entry"> Data Entry</label><br><br>
+
+  <!-- Dynamic Task Section -->
+  <h2>Workload Distribution by Task</h2>
+  <div id="taskContainer"></div>
+  <button type="button" class="add-btn" onclick="addTask()">+ Add Task</button>
+
+  <p><strong>Total Load Must Be 100%</strong></p>
+  <p id="totalLoadWarning" style="color: red;"></p>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const taskContainer = document.getElementById('taskContainer');
+  let taskIndex = 0;
+
+  function addTask() {
+    const div = document.createElement('div');
+    div.className = 'task-entry';
+    div.innerHTML = `
+      <input type="text" name="task_name_${taskIndex}" placeholder="Task Name" required />
+      <input type="number" name="task_load_${taskIndex}" placeholder="% Load" min="0" max="100" required oninput="validateTotalLoad()" />
+      <button type="button" class="remove-btn" onclick="removeTask(this)">X</button>
+    `;
+    taskContainer.appendChild(div);
+    taskIndex++;
+  }
+
+  function removeTask(button) {
+    button.parentElement.remove();
+    validateTotalLoad();
+  }
+
+  function validateTotalLoad() {
+    const loads = taskContainer.querySelectorAll('input[type=number]');
+    let total = 0;
+    loads.forEach(input => {
+      total += Number(input.value);
+    });
+    const warning = document.getElementById('totalLoadWarning');
+    if (total !== 100) {
+      warning.textContent = `Current total is ${total}%. It must be 100%.`;
+    } else {
+      warning.textContent = '';
+    }
+  }
+
+  document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Validate total load
+    const loadInputs = taskContainer.querySelectorAll('input[type=number]');
+    let totalLoad = 0;
+    loadInputs.forEach(input => {
+      totalLoad += Number(input.value);
+    });
+
+    if (totalLoad !== 100) {
+      alert("The total workload must sum up to 100%");
+      return;
+    }
+
+    // Collect form data
+    const formData = new FormData(this);
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+      if (data[key]) {
+        if (!Array.isArray(data[key])) {
+          data[key] = [data[key]];
+        }
+        data[key].push(value);
+      } else {
+        data[key] = value;
+      }
+    }
+
+    // Print data or send via fetch to backend
+    console.log("Form Data Submitted:", data);
+
+    alert("Form submitted successfully!");
+    this.reset();
+    taskContainer.innerHTML = '';
+    document.getElementById('totalLoadWarning').textContent = '';
+    taskIndex = 0;
+  });
+</script>
+
+</body>
+</html>
