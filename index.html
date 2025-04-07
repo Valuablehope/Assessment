@@ -243,33 +243,45 @@
   }
 
   document.getElementById('assessmentForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const loadInputs = taskContainer.querySelectorAll('input[type=number]');
-    let totalLoad = 0;
-    loadInputs.forEach(input => totalLoad += Number(input.value));
-    if (totalLoad !== 100) {
-      alert("The total workload must sum up to 100%");
-      return;
-    }
+  e.preventDefault();
 
-    const formData = new FormData(this);
-    const data = {};
-    for (let [key, value] of formData.entries()) {
-      if (data[key]) {
-        if (!Array.isArray(data[key])) data[key] = [data[key]];
-        data[key].push(value);
-      } else {
-        data[key] = value;
-      }
-    }
+  const loadInputs = taskContainer.querySelectorAll('input[type=number]');
+  let totalLoad = 0;
+  loadInputs.forEach(input => totalLoad += Number(input.value));
+  if (totalLoad !== 100) {
+    alert("The total workload must sum up to 100%");
+    return;
+  }
 
-    console.log("Form Data Submitted:", data);
-    alert("Form submitted anonymously!");
-    this.reset();
-    taskContainer.innerHTML = '';
-    document.getElementById('totalLoadWarning').textContent = '';
-    taskIndex = 0;
+  const formData = new FormData(this);
+  const data = {};
+  for (let [key, value] of formData.entries()) {
+    if (data[key]) {
+      if (!Array.isArray(data[key])) data[key] = [data[key]];
+      data[key].push(value);
+    } else {
+      data[key] = value;
+    }
+  }
+
+  fetch("https://script.google.com/macros/s/AKfycbzgQLOXoz4V3xiaPpOQeYaDl2JqrIyH8KiVWnNQLaaGy5JCsZAFR1aYxrr9ER62gNLqYg/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  }).then(res => {
+    if (res.ok) {
+      alert("Form submitted successfully!");
+      document.getElementById("assessmentForm").reset();
+      taskContainer.innerHTML = '';
+      document.getElementById("totalLoadWarning").textContent = '';
+      taskIndex = 0;
+    } else {
+      alert("Submission failed. Please try again.");
+    }
+  }).catch(() => {
+    alert("Error submitting form.");
   });
+});
 </script>
 
 </body>
