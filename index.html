@@ -3,177 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Workload Assessment</title>
+  <title>Health Structure Workload Analysis</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #f5f7fa;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 2rem;
-      min-height: 100vh;
+      margin: 0; padding: 2rem; background-color: #f5f7fa;
+      display: flex; justify-content: center; min-height: 100vh;
     }
-
     form {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
+      background: #fff; padding: 2rem; border-radius: 12px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 800px;
-      transition: 0.3s ease;
+      width: 100%; max-width: 800px;
     }
-
-    h1, h2 {
-      color: #333;
-      margin-bottom: 1rem;
-    }
-
-    label {
-      display: block;
-      margin: 0.8rem 0 0.4rem;
-      color: #444;
-      font-weight: 500;
-    }
-
+    h1, h2 { color: #333; margin-bottom: 1rem; }
+    label { display: block; margin: 1rem 0 0.5rem; font-weight: 500; color: #444; }
     input[type="text"],
     input[type="number"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+    textarea, select {
+      width: 100%; padding: 0.6rem;
+      border: 1px solid #ccc; border-radius: 8px;
       font-size: 1rem;
-      transition: border-color 0.2s ease;
     }
-
-    input:focus,
-    textarea:focus {
-      border-color: #7b5eea;
-      outline: none;
-    }
-
     .checkbox-group, .radio-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;
     }
-
     .checkbox-group label,
     .radio-group label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 400;
+      display: flex; align-items: center; gap: 0.5rem;
     }
-
     .task-entry {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 0.8rem;
-      align-items: center;
+      display: flex; gap: 1rem; margin-bottom: 0.8rem; align-items: center;
     }
-
-    .task-entry input {
-      flex: 1;
-    }
-
+    .task-entry input { flex: 1; }
     .remove-btn {
-      background: crimson;
-      color: white;
-      border: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
+      background: crimson; color: white; border: none;
+      padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer;
     }
-
-    .remove-btn:hover {
-      background: darkred;
-    }
-
     .add-btn {
-      background: #7b5eea;
-      color: white;
-      border: none;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      font-size: 1rem;
+      background: #7b5eea; color: white; border: none;
+      padding: 0.6rem 1rem; border-radius: 8px; margin-top: 0.5rem;
       cursor: pointer;
-      margin-top: 0.5rem;
-      transition: background 0.3s ease;
     }
-
-    .add-btn:hover {
-      background: #6149c4;
-    }
-
     button[type="submit"] {
-      background: #00b894;
-      color: white;
-      padding: 0.8rem 1.6rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+      background: #00b894; color: white;
+      padding: 0.8rem 1.6rem; border: none;
+      border-radius: 10px; cursor: pointer;
       margin-top: 2rem;
-      transition: background 0.3s ease;
     }
-
-    button[type="submit"]:hover {
-      background: #019875;
-    }
-
     @media (max-width: 600px) {
-      .task-entry {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .remove-btn {
-        width: 100%;
-      }
+      .task-entry { flex-direction: column; align-items: stretch; }
+      .remove-btn { width: 100%; }
     }
   </style>
 </head>
 <body>
 
 <form id="assessmentForm">
-  <h1>Workload Assessment Form</h1>
+  <h1>Health Structure Workload Analysis</h1>
 
-  <label for="name">Full Name:</label>
-  <input type="text" name="name" required>
+  <!-- Q1 -->
+  <label for="position">What is your position within PUI?</label>
+  <select name="position" required>
+    <option value="" disabled selected>Select your position</option>
+    <option>Deputy Health Coordinator</option>
+    <option>Pharmacist Specialist</option>
+    <option>Health Information Management Specialist</option>
+    <option>Quality Health Specialist</option>
+    <option>Pharmacist</option>
+    <option>Community Health Specialist</option>
+    <option>HIS Officer Coo</option>
+    <option>Senior Medical Specialist</option>
+    <option>Medical Specialist</option>
+    <option>Health PM</option>
+    <option>DHPM</option>
+    <option>HIS Officer Base</option>
+    <option>HIS TL</option>
+    <option>PHCC TM</option>
+    <option>Community TM</option>
+    <option>Quality Advisor</option>
+    <option>Community Health Supervisor</option>
+    <option>BCA Officer</option>
+    <option>Midwife</option>
+  </select>
 
-  <label for="role">Describe your main responsibilities:</label>
-  <textarea name="role" rows="4" required></textarea>
-
-  <label>How would you rate your current workload?</label>
+  <!-- Q2 -->
+  <label>How many years of experience do you have in this role?</label>
   <div class="radio-group">
-    <label><input type="radio" name="workload_rating" value="Light" required> Light</label>
-    <label><input type="radio" name="workload_rating" value="Moderate"> Moderate</label>
-    <label><input type="radio" name="workload_rating" value="Heavy"> Heavy</label>
+    <label><input type="radio" name="experience" value="Less than 3 years" required> Less than 3 years</label>
+    <label><input type="radio" name="experience" value="3 years - 6 years"> 3–6 years</label>
+    <label><input type="radio" name="experience" value="6-10 years"> 6–10 years</label>
+    <label><input type="radio" name="experience" value="More than 10 years"> More than 10 years</label>
   </div>
 
-  <label>Which of the following activities do you handle?</label>
-  <div class="checkbox-group">
-    <label><input type="checkbox" name="activities" value="Meetings"> Meetings</label>
-    <label><input type="checkbox" name="activities" value="Reporting"> Reporting</label>
-    <label><input type="checkbox" name="activities" value="Field Visits"> Field Visits</label>
-    <label><input type="checkbox" name="activities" value="Admin Tasks"> Admin Tasks</label>
-    <label><input type="checkbox" name="activities" value="Data Entry"> Data Entry</label>
+  <!-- Q3 -->
+  <label>What are your main tasks?</label>
+  <textarea name="main_tasks" rows="4" required></textarea>
+
+  <!-- Q4 -->
+  <label>Please classify the tasks that are taking the most time to the least:</label>
+  <textarea name="time_classification" rows="4" required></textarea>
+
+  <!-- Q5 -->
+  <label>What are your suggestions to reduce the time on these tasks?</label>
+  <textarea name="time_reduction_suggestions" rows="4" required></textarea>
+
+  <!-- Q6 -->
+  <label>Are you able to absorb additional tasks within your working hours time?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="absorb_more" value="Yes" required> Yes</label>
+    <label><input type="radio" name="absorb_more" value="No"> No</label>
   </div>
 
+  <!-- Q7 -->
+  <label>How do you see your role within the HR structure?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="role_importance" value="Very essential" required> Very essential</label>
+    <label><input type="radio" name="role_importance" value="Not essential"> Not essential</label>
+    <label><input type="radio" name="role_importance" value="Can be improved"> Can be improved</label>
+    <label><input type="radio" name="role_importance" value="Other"> Other</label>
+  </div>
+
+  <!-- Q8 -->
+  <label>What are the main channels to report to for the same topic?</label>
+  <textarea name="reporting_channels" rows="4" required></textarea>
+
+  <!-- Q9 -->
+  <label>How do you think the monitoring of the activities could be improved with less time spent?</label>
+  <textarea name="monitoring_improvement" rows="4" required></textarea>
+
+  <!-- Q10: Dynamic Task Input -->
   <h2>Workload Distribution by Task</h2>
   <div id="taskContainer"></div>
   <button type="button" class="add-btn" onclick="addTask()">+ Add Task</button>
@@ -207,22 +166,16 @@
   function validateTotalLoad() {
     const loads = taskContainer.querySelectorAll('input[type=number]');
     let total = 0;
-    loads.forEach(input => {
-      total += Number(input.value);
-    });
+    loads.forEach(input => total += Number(input.value));
     const warning = document.getElementById('totalLoadWarning');
     warning.textContent = (total !== 100) ? `Current total is ${total}%. It must be 100%.` : '';
   }
 
   document.getElementById('assessmentForm').addEventListener('submit', function(e) {
     e.preventDefault();
-
     const loadInputs = taskContainer.querySelectorAll('input[type=number]');
     let totalLoad = 0;
-    loadInputs.forEach(input => {
-      totalLoad += Number(input.value);
-    });
-
+    loadInputs.forEach(input => totalLoad += Number(input.value));
     if (totalLoad !== 100) {
       alert("The total workload must sum up to 100%");
       return;
@@ -240,8 +193,7 @@
     }
 
     console.log("Form Data Submitted:", data);
-    alert("Form submitted successfully!");
-
+    alert("Form submitted anonymously!");
     this.reset();
     taskContainer.innerHTML = '';
     document.getElementById('totalLoadWarning').textContent = '';
