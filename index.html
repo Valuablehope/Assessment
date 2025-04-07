@@ -3,56 +3,147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Workload Assessment Form</title>
+  <title>Workload Assessment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 2rem;
-    }
-    form {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      margin-top: 2rem;
-    }
-    .task-entry {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
       display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    form {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 800px;
+      transition: 0.3s ease;
+    }
+
+    h1, h2 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin: 0.8rem 0 0.4rem;
+      color: #444;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #7b5eea;
+      outline: none;
+    }
+
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
     }
+
+    .checkbox-group label,
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 400;
+    }
+
+    .task-entry {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+      align-items: center;
+    }
+
     .task-entry input {
       flex: 1;
     }
+
     .remove-btn {
       background: crimson;
       color: white;
       border: none;
-      padding: 0.3rem 0.8rem;
-      border-radius: 5px;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
     }
+
+    .remove-btn:hover {
+      background: darkred;
+    }
+
     .add-btn {
-      background: #4caf50;
+      background: #7b5eea;
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-size: 1rem;
       cursor: pointer;
-      margin-bottom: 1rem;
+      margin-top: 0.5rem;
+      transition: background 0.3s ease;
     }
+
+    .add-btn:hover {
+      background: #6149c4;
+    }
+
     button[type="submit"] {
-      background: #007bff;
+      background: #00b894;
       color: white;
-      padding: 0.7rem 1.5rem;
+      padding: 0.8rem 1.6rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
+      margin-top: 2rem;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: #019875;
+    }
+
+    @media (max-width: 600px) {
+      .task-entry {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .remove-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -61,33 +152,31 @@
 <form id="assessmentForm">
   <h1>Workload Assessment Form</h1>
 
-  <!-- Short Text -->
-  <label for="name">Full Name:</label><br>
-  <input type="text" name="name" required><br><br>
+  <label for="name">Full Name:</label>
+  <input type="text" name="name" required>
 
-  <!-- Long Text -->
-  <label for="role">Describe your main responsibilities:</label><br>
-  <textarea name="role" rows="4" required></textarea><br><br>
+  <label for="role">Describe your main responsibilities:</label>
+  <textarea name="role" rows="4" required></textarea>
 
-  <!-- MCQ -->
-  <label>How would you rate your current workload?</label><br>
-  <label><input type="radio" name="workload_rating" value="Light" required> Light</label><br>
-  <label><input type="radio" name="workload_rating" value="Moderate"> Moderate</label><br>
-  <label><input type="radio" name="workload_rating" value="Heavy"> Heavy</label><br><br>
+  <label>How would you rate your current workload?</label>
+  <div class="radio-group">
+    <label><input type="radio" name="workload_rating" value="Light" required> Light</label>
+    <label><input type="radio" name="workload_rating" value="Moderate"> Moderate</label>
+    <label><input type="radio" name="workload_rating" value="Heavy"> Heavy</label>
+  </div>
 
-  <!-- Multi-select -->
-  <label>Which of the following activities do you handle? (Select all that apply):</label><br>
-  <label><input type="checkbox" name="activities" value="Meetings"> Meetings</label><br>
-  <label><input type="checkbox" name="activities" value="Reporting"> Reporting</label><br>
-  <label><input type="checkbox" name="activities" value="Field Visits"> Field Visits</label><br>
-  <label><input type="checkbox" name="activities" value="Admin Tasks"> Admin Tasks</label><br>
-  <label><input type="checkbox" name="activities" value="Data Entry"> Data Entry</label><br><br>
+  <label>Which of the following activities do you handle?</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="activities" value="Meetings"> Meetings</label>
+    <label><input type="checkbox" name="activities" value="Reporting"> Reporting</label>
+    <label><input type="checkbox" name="activities" value="Field Visits"> Field Visits</label>
+    <label><input type="checkbox" name="activities" value="Admin Tasks"> Admin Tasks</label>
+    <label><input type="checkbox" name="activities" value="Data Entry"> Data Entry</label>
+  </div>
 
-  <!-- Dynamic Task Section -->
   <h2>Workload Distribution by Task</h2>
   <div id="taskContainer"></div>
   <button type="button" class="add-btn" onclick="addTask()">+ Add Task</button>
-
   <p><strong>Total Load Must Be 100%</strong></p>
   <p id="totalLoadWarning" style="color: red;"></p>
 
@@ -104,7 +193,7 @@
     div.innerHTML = `
       <input type="text" name="task_name_${taskIndex}" placeholder="Task Name" required />
       <input type="number" name="task_load_${taskIndex}" placeholder="% Load" min="0" max="100" required oninput="validateTotalLoad()" />
-      <button type="button" class="remove-btn" onclick="removeTask(this)">X</button>
+      <button type="button" class="remove-btn" onclick="removeTask(this)">×</button>
     `;
     taskContainer.appendChild(div);
     taskIndex++;
@@ -122,17 +211,12 @@
       total += Number(input.value);
     });
     const warning = document.getElementById('totalLoadWarning');
-    if (total !== 100) {
-      warning.textContent = `Current total is ${total}%. It must be 100%.`;
-    } else {
-      warning.textContent = '';
-    }
+    warning.textContent = (total !== 100) ? `Current total is ${total}%. It must be 100%.` : '';
   }
 
   document.getElementById('assessmentForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Validate total load
     const loadInputs = taskContainer.querySelectorAll('input[type=number]');
     let totalLoad = 0;
     loadInputs.forEach(input => {
@@ -144,24 +228,20 @@
       return;
     }
 
-    // Collect form data
     const formData = new FormData(this);
     const data = {};
     for (let [key, value] of formData.entries()) {
       if (data[key]) {
-        if (!Array.isArray(data[key])) {
-          data[key] = [data[key]];
-        }
+        if (!Array.isArray(data[key])) data[key] = [data[key]];
         data[key].push(value);
       } else {
         data[key] = value;
       }
     }
 
-    // Print data or send via fetch to backend
     console.log("Form Data Submitted:", data);
-
     alert("Form submitted successfully!");
+
     this.reset();
     taskContainer.innerHTML = '';
     document.getElementById('totalLoadWarning').textContent = '';
