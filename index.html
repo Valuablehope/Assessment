@@ -90,11 +90,6 @@
       text-align: center;
       font-weight: 500;
     }
-    #totalLoadWarning {
-      color: red;
-      font-size: 0.9rem;
-      margin-top: 0.25rem;
-    }
     @media (max-width: 500px) {
       .task-container > div {
         flex-direction: column;
@@ -173,18 +168,17 @@
 
   <div class="question-box">
     <label>7. Workload Distribution by Task</label>
-    <p>Please list tasks with their corresponding load % (total must = 100%).</p>
+    <p>Please list tasks with their corresponding load % (you may exceed 100% if needed).</p>
     <div id="tasks" class="task-container">
       <div>
         <input type="text" name="task_name[]" placeholder="Task Name" required>
-        <input type="number" name="task_load[]" placeholder="% Load" min="0" max="100" required oninput="validateTotalLoad()">
+        <input type="number" name="task_load[]" placeholder="% Load" min="0" max="100" required>
       </div>
     </div>
-    <div id="totalLoadWarning"></div>
     <button type="button" class="btn" onclick="addTask()">+ Add Task</button>
   </div>
 
-<div class="question-box">
+  <div class="question-box">
     <label>8. What are your suggestions to reduce the time on these tasks?</label>
     <textarea name="time_reduction_suggestions" rows="3" required></textarea>
   </div>
@@ -199,31 +193,13 @@
     const div = document.createElement('div');
     div.innerHTML = `
       <input type="text" name="task_name[]" placeholder="Task Name" required>
-      <input type="number" name="task_load[]" placeholder="% Load" min="0" max="100" required oninput="validateTotalLoad()">
+      <input type="number" name="task_load[]" placeholder="% Load" min="0" max="100" required>
     `;
     container.appendChild(div);
   }
 
-  function validateTotalLoad() {
-    const inputs = document.querySelectorAll('input[name="task_load[]"]');
-    let total = 0;
-    inputs.forEach(input => total += parseFloat(input.value || 0));
-    const warning = document.getElementById("totalLoadWarning");
-    if (total !== 100) {
-      warning.textContent = `Total load is ${total}%. It must equal 100%.`;
-      return false;
-    } else {
-      warning.textContent = "";
-      return true;
-    }
-  }
-
   document.getElementById('workloadForm').addEventListener('submit', function (e) {
     e.preventDefault();
-
-    if (!validateTotalLoad()) {
-      return;
-    }
 
     const form = e.target;
     const formData = new FormData(form);
@@ -238,7 +214,7 @@
       taskContainer.innerHTML = `
         <div>
           <input type="text" name="task_name[]" placeholder="Task Name" required>
-          <input type="number" name="task_load[]" placeholder="% Load" min="0" max="100" required oninput="validateTotalLoad()">
+          <input type="number" name="task_load[]" placeholder="% Load" min="0" max="100" required>
         </div>
       `;
       document.getElementById('confirmation').style.display = 'block';
