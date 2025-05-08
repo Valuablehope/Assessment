@@ -76,9 +76,14 @@
       margin-top: 1rem;
       cursor: pointer;
       font-size: 1rem;
+      transition: background 0.3s ease;
     }
-    .btn:hover {
+    .btn:hover:enabled {
       background: #360062;
+    }
+    .btn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
     }
     #confirmation {
       display: none;
@@ -184,7 +189,7 @@
     <textarea name="time_reduction_suggestions" rows="3" required></textarea>
   </div>
 
-  <button type="submit" class="btn">Submit</button>
+  <button type="submit" id="submitBtn" class="btn">Submit</button>
   <div id="confirmation">Thank you! Your response has been submitted.</div>
 </form>
 
@@ -203,6 +208,10 @@
     e.preventDefault();
 
     const form = e.target;
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
     const formData = new FormData(form);
 
     fetch(form.action, {
@@ -222,9 +231,14 @@
       setTimeout(() => {
         document.getElementById('confirmation').style.display = 'none';
       }, 4000);
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
     }).catch(error => {
       alert("There was an error submitting the form. Please try again.");
       console.error('Submission error:', error);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
     });
   });
 </script>
